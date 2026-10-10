@@ -1,16 +1,39 @@
-:root { --bg: #faf8f5; --fg: #1d1b19; --muted: #6b655e; --accent: #b3261e; --line: #e4dfd8; }
+:root { --bg: #faf8f5; --fg: #1d1b19; --muted: #6b655e; --accent: #b3261e; --line: #e4dfd8; --side: #f2eee8; }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #161412; --fg: #ece8e3; --muted: #a39d95; --accent: #f2766d; --line: #2e2a26; }
+  :root { --bg: #161412; --fg: #ece8e3; --muted: #a39d95; --accent: #f2766d; --line: #2e2a26; --side: #1e1b18; }
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg);
   font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-main { max-width: 680px; margin: 0 auto; padding: 48px 16px 64px; }
+a { color: var(--accent); }
+
+.layout { display: flex; min-height: 100vh; }
+.sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; gap: 24px; padding: 40px 20px;
+  background: var(--side); border-right: 1px solid var(--line); }
+.brand { font-weight: 700; font-size: 1.15rem; color: var(--fg); text-decoration: none; }
+.pages { display: flex; flex-direction: column; gap: 2px; }
+.pages a { color: var(--fg); text-decoration: none; padding: 6px 10px; border-radius: 8px; }
+.pages a:hover { background: var(--line); }
+.pages a[aria-current="page"] { background: var(--line); font-weight: 600; }
+.lang { margin-top: auto; display: flex; gap: 4px; font-size: 0.9rem; }
+.lang a { color: var(--muted); text-decoration: none; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
+.lang a[aria-current="true"] { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+
+main { flex: 1; min-width: 0; max-width: 720px; padding: 48px 40px 64px; }
 h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 4px; }
 h2 { font-size: 1.25rem; margin: 2em 0 0.5em; }
 h3 { font-size: 1.05rem; margin: 1.5em 0 0.25em; }
-a { color: var(--accent); }
 .muted { color: var(--muted); font-size: 0.95rem; }
-nav { display: flex; gap: 16px; margin-bottom: 32px; font-size: 0.95rem; }
-hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
 footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 720px) {
+  .layout { flex-direction: column; }
+  .sidebar { position: static; width: auto; height: auto; padding: 16px;
+    flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+    border-right: 0; border-bottom: 1px solid var(--line); }
+  .pages { flex-direction: row; flex-wrap: wrap; }
+  .pages a { padding: 4px 8px; }
+  .lang { margin-top: 0; margin-left: auto; }
+  main { padding: 32px 16px 48px; }
+}
